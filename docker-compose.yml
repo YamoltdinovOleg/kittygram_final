@@ -3,15 +3,27 @@ version: '3'
 volumes:
   pg_data:
   static:
+  media:
+  admin_static:
 
 services:
   db:
     image: postgres:13
+    env_file: .env
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     volumes:
       - pg_data:/var/lib/postgresql/data
   backend:
     build: ./backend/
     env_file: .env
+    volumes:
+      - media:/app/media
+      - admin_static:/app/static
+    depends_on:
+      - db
   frontend:
     env_file: .env
     build: ./frontend/
@@ -25,3 +37,5 @@ services:
       - 9000:80
     volumes:
       - static:/static
+      - media:/media
+      - admin_static:/admin_static
