@@ -18,6 +18,8 @@ services:
       - static_volume:/backend_static
     ports:
       - 8000:9000
+    depends_on:
+      - db
   frontend:
     image: yamoltdinovoleg/kittygram_frontend  # Качаем с Docker Hub
     env_file: .env
@@ -31,3 +33,6 @@ services:
       - static_volume:/staticfiles/
     ports:
       - 9000:80
+    depends_on:
+      - backend
+      - frontend
