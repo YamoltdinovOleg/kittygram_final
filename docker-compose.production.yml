@@ -16,6 +16,8 @@ services:
     env_file: .env
     volumes:
       - static_volume:/backend_static
+    ports:
+      - 8000:9000
   frontend:
     image: yamoltdinovoleg/kittygram_frontend  # Качаем с Docker Hub
     env_file: .env
